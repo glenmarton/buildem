@@ -24,8 +24,13 @@ $(PYTHON3): $(PREFIX)/zlib
 #
 .PHONY: clean
 clean:
-	rm -rf perl.sh postgresql-*
+	rm -rf perl.sh postgresql-* compiled.tar.xz
 	cd python* && $(MAKE) clean && cd - >/dev/null
+
+.PHONY: pkg
+pkg:
+	tar cf compiled.tar -C $(PREFIX)/.. ./compiled
+	xz -f9 compiled.tar
 
 .PHONY: distclean
 distclean:
