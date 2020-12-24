@@ -8,7 +8,7 @@ TOP=${BIN%/*}
 get_project_src_dir_from() {
 	typeset repo=$1
 	typeset proj=${1##*/}
-	proj="$TOP/${proj%.*}"
+	proj="${proj%.git}"
 
 	if ! test -d $proj
 	then
@@ -25,7 +25,11 @@ get_project_src_dir_from() {
 }
 checkout_latest_git_tag() {
 	TAG=$(git tag | awk -f $BIN/latest_tag.awk)
-	git checkout "$TAG" >/dev/null
+	if [ "$TAG" = '' ] ; then
+		echo 'ERROR: No git tag found.' >&2
+		exit 2
+	fi
+	git checkout "$TAG" 2>/dev/null
 }
 build_and_install_proj() {
 	typeset prefix=$1
