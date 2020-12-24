@@ -3,9 +3,8 @@ BIN=${0%/*}
 URL=$1
 PREFIX=${PREFIX:=$HOME/.opt}
 
-FILENAME=$($BIN/scrape_latest.sh $URL | head -n1)
-
-TARBALL=$HOME/Downloads/$FILENAME
+SRCDIR=$($BIN/download_unpackage.sh $URL | sed 's/\.tar.*//')
+echo "Source dir is $SRCDIR" >&2
 
 if ! test -f $TARBALL
 then
