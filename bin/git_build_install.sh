@@ -37,6 +37,7 @@ build_and_install_proj() {
 		export CFLAGS=-m32
 	fi
 
+	generate_configure_script
 	./configure --prefix=$PREFIX
 	make all install
 
@@ -61,6 +62,21 @@ add_lib_to_system() {
 	fi
 }
 
+generate_configure_script() {
+	if test -x configure
+	then
+		test $DEBUG && echo 'Configure exists' >&2
+	elif test -x ./autogen.sh
+	then
+		./autogen.sh
+	else
+		if ! autoreconf
+		then
+			test $DEBUG && echo 'No way to generate configure'
+			exit 2
+		fi
+	fi
+}
 register_lib() {
 	typeset path=$1
 	typeset conf=$2
