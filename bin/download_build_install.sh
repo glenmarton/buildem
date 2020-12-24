@@ -19,6 +19,10 @@ generate_configure_script() {
 	fi
 }
 
+build_src() {
+	true
+}
+
 #
 #   s c r i p t
 #
@@ -29,9 +33,8 @@ PREFIX=${PREFIX:=$HOME/.opt}
 SRCDIR=$($BIN/download_unpackage.sh $URL | sed 's/\.tar.*//')
 echo "Source dir is $SRCDIR" >&2
 
-if ! test -f $TARBALL
+if build_src
 then
-	curl "$URL/$FILENAME" > $TARBALL
 	cd $SRCDIR
 	generate_configure_script
 	./configure --prefix=$PREFIX
