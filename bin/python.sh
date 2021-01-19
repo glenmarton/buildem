@@ -20,7 +20,7 @@ download_source_of() {
 	typeset tarball="Python-$version.tgz"
 	typeset url="https://www.python.org/ftp/python/$version/$tarball"
 
-	download_url_to "$url" "$HOME/Downloads/$tarball"
+	download_url_to "$url" "./downloads/$tarball"
 }
 build_and_install() {
 	typeset directory="$1"
