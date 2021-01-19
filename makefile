@@ -9,14 +9,17 @@ $(PERL):
 	sed -i -f bin/perl.sed perl.sh
 	chmod +x $(PERL)
 
-$(PREFIX)/zlib:
+$(PREFIX)/lib/libz.so:
 	./bin/git_build_install.sh
 
-$(PYTHON3): $(PREFIX)/zlib
+$(PYTHON3): $(PREFIX)/lib/libz.so
 	./bin/git_build_install.sh https://github.com/python/cpython.git
-	echo "sudo ln -s $(PREFIX)/bin/python3 /usr/bin/python3"
-	#sudo rm -f $(PREFIX)/bin/python3
-	#mv $(PREFIX)/cpython $(PREFIX)
+
+/usr/bin/python3: $(PYTHON3)
+	sudo ln -fs $(PREFIX)/bin/python3 /usr/bin/python3
+
+/usr/bin/pip3: $(PYTHON3)
+	sudo ln -fs $(PREFIX)/bin/pip3 /usr/bin/pip3
 
 #
 #   PHONY
@@ -43,7 +46,7 @@ git:
 
 .PHONY: openssl
 openssl:
-	./bin/openssl.sh
+	./bin/openssl.sh $(PREFIX)
 
 .PHONY: perl
 perl: $(PERL)
@@ -52,8 +55,7 @@ perl: $(PERL)
 	$(MAKE) -C perl*
 
 .PHONY: python3
-python3:
-	$(MAKE) $(PYTHON3)
+python3: $(PYTHON3) /usr/bin/python3 /usr/bin/pip3
 
 .PHONY: junk
 junk:
