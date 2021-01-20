@@ -16,7 +16,8 @@ download_latest_source() {
 build_and_install() {
 	cd openssl-*
 	./config --prefix=$PREFIX
-	make all test install
+	make all test
+	sudo make install
 	cd - >/dev/null 2>&1
 }
 update_ld_so_conf() {
