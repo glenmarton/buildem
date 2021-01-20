@@ -12,7 +12,7 @@ $(PERL):
 $(PREFIX)/lib/libz.so:
 	./bin/git_build_install.sh
 
-$(PYTHON3): $(PREFIX)/lib/libz.so
+$(PYTHON3): $(PREFIX)/lib/libcrypto.so
 	./bin/git_build_install.sh https://github.com/python/cpython.git
 
 /usr/bin/python3: $(PYTHON3)
@@ -20,6 +20,9 @@ $(PYTHON3): $(PREFIX)/lib/libz.so
 
 /usr/bin/pip3: $(PYTHON3)
 	sudo ln -fs $(PREFIX)/bin/pip3 /usr/bin/pip3
+
+$(PREFIX)/lib/libcrypto.so:
+	./bin/openssl.sh
 
 #
 #   PHONY
