@@ -40,7 +40,8 @@ build_and_install_proj() {
 	generate_configure_script
 	if configure_project $DIR $prefix
 	then
-		make all install
+		make all test
+		make install 2>/dev/null && sudo make install
 	else
 		echo "ERROR: Failed configuring $DIR." >&2
 		exit 3

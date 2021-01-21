@@ -17,7 +17,7 @@ build_and_install() {
 	cd openssl-*
 	./config --prefix=$PREFIX
 	make all test
-	sudo make install
+	make install || sudo make install
 	cd - >/dev/null 2>&1
 }
 update_ld_so_conf() {
