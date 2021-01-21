@@ -37,3 +37,4 @@ TARBALL=$(download_latest_source)
 tar -xzf $TARBALL
 
 build_and_install "$TARBALL"
+add_lib_to_system $PREFIX compiled
