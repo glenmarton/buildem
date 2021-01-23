@@ -38,8 +38,13 @@ build_and_install_proj() {
 	fi
 
 	generate_configure_script
-	./configure --prefix=$PREFIX
-	make all install
+	if configure_project $DIR $prefix
+	then
+		make all install
+	else
+		echo "ERROR: Failed configuring $DIR." >&2
+		exit 3
+	fi
 
 	if [ $CFLAGS ] ; then
 		unset CFLAGS
@@ -77,6 +82,20 @@ generate_configure_script() {
 		fi
 	fi
 }
+configure_project() {
+	typeset proj=$1
+	typeset prefix=$2
+
+	cd $proj
+	if test -f $BIN/configure_$proj.sh
+	then
+		$BIN/configure_$proj.sh $prefix
+	else
+		./configure --prefix=$prefix
+	fi
+	return $?
+}
+
 register_lib() {
 	typeset path=$1
 	typeset conf=$2
@@ -90,10 +109,12 @@ register_lib() {
 #
 #   s c r i p t
 #
+BIN=$(readlink -f $0)
+BIN=${BIN%/*}
 REPO=$1
 REPO=${REPO:=https://github.com/madler/zlib.git}
-
 DIR=$(get_project_src_dir_from $REPO)
+
 cd $DIR
 checkout_latest_git_tag
 
