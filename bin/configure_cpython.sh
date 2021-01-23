@@ -21,7 +21,7 @@ pretend_libxz5_is_installed() {
 		sudo ln -fs /usr/lib/liblzma.so /usr/lib/liblzma.so.5
 	elif ! test -f /usr/lib/liblzma.so
 	then
-		echo "ERROR: Missing libxz, install libxz on server." >&2
+		echo "ERROR: Missing liblzma, install liblzma on server." >&2
 		exit 3
 	fi
 }

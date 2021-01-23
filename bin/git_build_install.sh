@@ -87,7 +87,6 @@ configure_project() {
 	typeset proj=$1
 	typeset prefix=$2
 
-	cd $proj
 	if test -f $BIN/configure_$proj.sh
 	then
 		$BIN/configure_$proj.sh $prefix
