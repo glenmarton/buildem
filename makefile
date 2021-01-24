@@ -1,4 +1,7 @@
-export PREFIX=$(HOME)/.opt
+#For system install: export PREFIX=/usr/local/compiled
+#For local $USER only:  export PREFIX=$(HOME)/.opt
+export PREFIX=/usr/local/compiled
+
 PYTHON3=$(PREFIX)/bin/python3
 PERL=./perl.sh
 
