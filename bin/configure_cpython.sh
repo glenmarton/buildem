@@ -19,6 +19,10 @@ pretend_libxz5_is_installed() {
 	if test -f /usr/lib/liblzma.so && rpm -q xz-4.999.9 >/dev/null
 	then
 		sudo ln -fs /usr/lib/liblzma.so /usr/lib/liblzma.so.5
+	elif test -f /usr/lib64/liblzma.so.5
+	then
+		# looks good
+		true
 	elif ! test -f /usr/lib/liblzma.so
 	then
 		echo "ERROR: Missing liblzma, install liblzma on server." >&2
