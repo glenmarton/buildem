@@ -1,0 +1,4 @@
+# Requirements.txt include architecture specific Django packages.
+# On creation of the Django `venv`, this package is installed.
+unicorn==1.0.1
+psycopg2-binary==2.8.5

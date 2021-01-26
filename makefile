@@ -2,8 +2,9 @@
 #For local $USER only:  export PREFIX=$(HOME)/.opt
 export PREFIX=/usr/local/compiled
 
-PYTHON3=$(PREFIX)/bin/python3
 PERL=./perl.sh
+PYPA=$(PREFIX)/share/pypa
+PYTHON3=$(PREFIX)/bin/python3
 
 all: $(PYTHON3)
 
@@ -17,6 +18,13 @@ $(PREFIX)/lib/libz.so:
 
 $(PYTHON3): $(PREFIX)/lib/libcrypto.so
 	./bin/git_build_install.sh https://github.com/python/cpython.git
+
+$(PYPA)/requirements.txt:
+	pip3 install wheel
+	mkdir -p $(PYPA)
+	cp requirements.txt $(PYPA)
+	cd $(PYPA) && $(PREFIX)/bin/pip3 download -r ./requirements.txt
+	mv ./pypa $(PYPA) || sudo mv ./pypa $(PYPA)
 
 /usr/bin/python3: $(PYTHON3)
 	sudo ln -fs $(PREFIX)/bin/python3 /usr/bin/python3
@@ -61,7 +69,7 @@ perl: $(PERL)
 	$(MAKE) -C perl*
 
 .PHONY: python3
-python3: $(PYTHON3) /usr/bin/python3 /usr/bin/pip3
+python3: $(PYTHON3) /usr/bin/python3 /usr/bin/pip3 $(PYPA)/requirements.txt
 
 .PHONY: junk
 junk:
