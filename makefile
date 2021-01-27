@@ -51,8 +51,7 @@ pkg:
 
 .PHONY: distclean
 distclean:
-	rm -rf perl-* postgresql-* python-*
-	rm -f perl.sh
+	ls ./ | sed '/bin/d ; /makefile/d ; /requirements.txt/d' | xargs rm -rf
 
 .PHONY: git
 git:
