@@ -16,7 +16,7 @@ checkout_latest_git_tag() {
 #
 if ! test -d $TOP/xz
 then
-	git clone git clone https://git.tuk@ni.org/xz.git
+	git clone git clone https://git.tukaani.org/xz.git
 fi
 
 cd $TOP/xz
