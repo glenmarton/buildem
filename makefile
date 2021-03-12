@@ -45,7 +45,8 @@ clean:
 	cd python* && $(MAKE) clean && cd - >/dev/null
 
 .PHONY: pkg
-pkg:	# first two lines attempt command for local installs. On failure execute commands using sudo.
+pkg: pypa/requirements.txt
+	# first two lines attempt command for local installs. On failure execute commands using sudo.
 	mkdir -p $(PYPA) || sudo mkdir -p $(PYPA)
 	cp ./pypa/requirements.txt ./pypa/*.whl $(PYPA) || sudo cp ./pypa/requirements.txt ./pypa/*.whl $(PYPA)
 	tar cf compiled.tar -C $(PREFIX)/.. ./compiled
