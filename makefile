@@ -76,3 +76,8 @@ python3: $(PYTHON3) /usr/bin/python3 /usr/bin/pip3 pypa/requirements.txt
 .PHONY: junk
 junk:
 	./junk.sh
+
+.PHONY: wheels
+wheels:
+	# PREFIX=${PREFIX}
+	cd ./pypa && $(PREFIX)/bin/pip3 wheel *.gz
