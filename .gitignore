@@ -1,4 +1,5 @@
 compiled.tar.xz
 compiled/
 cpython/
-openssl-1.1.1i/
+openssl-*/
+xz-*/
