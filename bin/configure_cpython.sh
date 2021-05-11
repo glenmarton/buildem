@@ -16,7 +16,11 @@ comment_out_pragma_lines_for_old_compiler() {
 }
 
 pretend_libxz5_is_installed() {
-	if test -f /usr/lib/liblzma.so && rpm -q xz-4.999.9 >/dev/null
+	if test -f $PREFIX/lib/liblzma.so
+	then
+		# looks good
+		true
+	elif test -f /usr/lib/liblzma.so && rpm -q xz-4.999.9 >/dev/null
 	then
 		sudo ln -fs /usr/lib/liblzma.so /usr/lib/liblzma.so.5
 	elif test -f /usr/lib64/liblzma.so.5
