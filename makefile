@@ -5,7 +5,7 @@ export PREFIX=/usr/local/compiled
 PERL=./perl.sh
 PYPA=$(PREFIX)/share/pypa
 PYTHON3=$(PREFIX)/bin/python3
-
+PRELIB=$(PREFIX)/lib
 all: $(PYTHON3)
 
 $(PERL):
@@ -13,10 +13,10 @@ $(PERL):
 	sed -i -f bin/perl.sed perl.sh
 	chmod +x $(PERL)
 
-$(PREFIX)/lib/libz.so:
-	./bin/git_build_install.sh
+$(PRELIB)/liblzma.so:
+	./bin/xzlib.sh
 
-$(PYTHON3): $(PREFIX)/lib/libcrypto.so
+$(PYTHON3): $(PRELIB)/libcrypto.so $(PRELIB)/liblzma.so
 	./bin/git_build_install.sh https://github.com/python/cpython.git
 
 pypa/requirements.txt: requirements.txt
@@ -32,7 +32,7 @@ pypa/requirements.txt: requirements.txt
 /usr/bin/pip3: $(PYTHON3)
 	sudo ln -fs $(PREFIX)/bin/pip3 /usr/bin/pip3
 
-$(PREFIX)/lib/libcrypto.so:
+$(PRELIB)/libcrypto.so:
 	./bin/openssl.sh
 
 #
