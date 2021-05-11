@@ -41,7 +41,8 @@ $(PRELIB)/libcrypto.so:
 #
 .PHONY: clean
 clean:
-	rm -rf perl.sh postgresql-* compiled.tar.xz ./pypa
+	rm -rf perl.sh postgresql-* compiled.tar.xz ./pypa ./xz-*
+	rm -f ~/Documents/perl*.gz ~/Downloads/openssl* ~/Downloads/xz*.gz
 	cd python* && $(MAKE) clean && cd - >/dev/null
 
 .PHONY: pkg
