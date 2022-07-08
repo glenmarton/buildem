@@ -71,6 +71,10 @@ perl: $(PERL)
 	mv perl*.tar.gz ~/Downloads
 	$(MAKE) -C perl*
 
+.PHONY: postgres
+postgres:
+	./bin/postgres.sh
+
 .PHONY: python3
 python3: $(PYTHON3) /usr/bin/python3 /usr/bin/pip3 pypa/requirements.txt
 
