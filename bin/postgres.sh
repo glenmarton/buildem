@@ -50,6 +50,7 @@ build_install_i686() {
 }
 build_install_x86_64() {
 	typeset dest=$1
+
 	./configure --prefix=$dest/x86_64
 	make clean all install
 }
@@ -92,10 +93,15 @@ PREFIX=${PREFIX:=$HOME/.opt}
 install_dependencies_for_compiling
 
 VERSION=$(get_latest_version)
+
+if ! test -d $HOME/Downloads
+then
+	echo "FATAL: Must have directory to download files to. Try 'mkdir ~/Downloads'"
+	exit 3
+fi
 TARBALL=$(download_source_of $VERSION)
 
 echo "Untarring $TARBALL>"
-set -x
 tar -xzf $TARBALL
 build_and_install "$TARBALL"
 
