@@ -70,9 +70,17 @@ make_pg_config_visible_to_OS() {
 	# half way down with the score of 8 dated Oct 28, 2015.
 	typeset target=$1
 	typeset link=/usr/local/bin/pg_config
-	if ! test -l $link
+	if test -f $link
 	then
-		ln -s $target $link
+		echo "Skipping: $target already exists."
+	elif ln -f -s $target $link
+	then
+		echo "Success: $target generated."
+	elif sudo ln -f -s $target $link
+	then
+		echo "Success: $target generated."
+	else
+		echo "Failed: No $target exists."
 	fi
 }
 
