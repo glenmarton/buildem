@@ -2,6 +2,7 @@
 BIN=$(readlink -f ${0%/*})
 TOP=${BIN%/*}
 PREFIX=${PREFIX:=$HOME/.local}
+DOWNLOADS=$($BIN/downloads_path.sh)
 
 #
 #   f u n c t i o n s
@@ -16,12 +17,12 @@ download_source() {
 	typeset url=$1
 	typeset SOURCE_TARBALL="${url##*/}"
 
-	if [ ! -f ~/Downloads/$SOURCE_TARBALL ]
+	if [ ! -f $DOWNLOADS/$SOURCE_TARBALL ]
 	then
+		cd $DOWNLOADS
 		wget $url
-		mv ${url##*/} ~/Downloads
 	fi
-	echo "$HOME/Downloads/$SOURCE_TARBALL"
+	echo "$DOWNLOADS/$SOURCE_TARBALL"
 }
 unzip_file() {
 	typeset tarball=$1

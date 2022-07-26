@@ -10,7 +10,7 @@ download_latest_source() {
 			sed -n 's/.*\(openssl-[0-9.]\+[a-z].*\.tar\.gz\).*/\1/p')
 	typeset url="https://www.openssl.org/source/$tarball"
 
-	download_url_to "$url" "$HOME/Downloads/$tarball"
+	download_url_to "$url" "$DOWNLOADS/$tarball"
 }
 
 build_and_install() {
@@ -33,6 +33,7 @@ update_ld_so_conf() {
 #
 PREFIX=${PREFIX:=$HOME/.local/openssl}
 TARBALL=$(download_latest_source)
+DOWNLOADS=$($BIN/downloads_path.sh)
 
 tar -xzf $TARBALL
 

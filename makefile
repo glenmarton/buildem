@@ -1,11 +1,15 @@
 #For system install: export PREFIX=/usr/local/compiled
 #For local $USER only:  export PREFIX=$(HOME)/.opt
 export PREFIX=/usr/local/compiled
-
 PERL=./perl.sh
 PYPA=$(PREFIX)/share/pypa
 PYTHON3=$(PREFIX)/bin/python3
 PRELIB=$(PREFIX)/lib
+DOWNLOADS:=$(shell ./bin/downloads_path.sh)
+
+#
+#   T A R G E T S
+#
 all: $(PYTHON3)
 
 $(PERL):
@@ -42,7 +46,7 @@ $(PRELIB)/libcrypto.so:
 .PHONY: clean
 clean:
 	rm -rf perl.sh postgresql-* compiled.tar.xz ./pypa ./xz-*
-	rm -f ~/Documents/perl*.gz ~/Downloads/openssl* ~/Downloads/xz*.gz
+	rm -f ./documents/*
 	cd python* && $(MAKE) clean && cd - >/dev/null
 
 .PHONY: pkg
@@ -55,7 +59,13 @@ pkg: pypa/requirements.txt
 
 .PHONY: distclean
 distclean:
+	rm $(DOWNLOADS)/postgres*.gz $(DOWNLOADS)/python*.gz $(DOWNLOADS)/perl*.gz $(DOWNLOADS)/xzlib*.gz $(DOWNLOADS)/openssl*.gz 
 	ls ./ | sed '/bin/d ; /makefile/d ; /requirements.txt/d' | xargs rm -rf
+
+.PHONY: flags
+flags:
+	# DOWNLOADS=$(DOWNLOADS)
+	# PREFIX=${PREFIX}
 
 .PHONY: git
 git:
@@ -68,7 +78,7 @@ openssl:
 .PHONY: perl
 perl: $(PERL)
 	$(PERL)
-	mv perl*.tar.gz ~/Downloads
+	mv perl*.tar.gz $(DOWNLOADS)
 	$(MAKE) -C perl*
 
 .PHONY: postgres
@@ -84,5 +94,4 @@ junk:
 
 .PHONY: wheels
 wheels:
-	# PREFIX=${PREFIX}
 	cd ./pypa && $(PREFIX)/bin/pip3 wheel *.gz
