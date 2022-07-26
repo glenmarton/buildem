@@ -57,4 +57,5 @@ else
 	./configure --prefix=$PREFIX
 	make all
 	make install || sudo make install
+	sudo ldconfig
 fi
