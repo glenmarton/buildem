@@ -21,7 +21,7 @@ $(PRELIB)/liblzma.so:
 	./bin/xzlib.sh
 
 $(PYTHON3): $(PRELIB)/libcrypto.so $(PRELIB)/liblzma.so
-	./bin/git_build_install.sh https://github.com/python/cpython.git
+	./bin/git_build_install.sh https://github.com/python/cpython.git v3.9.2
 
 pypa/requirements.txt: requirements.txt
 	pip3 install wheel

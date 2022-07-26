@@ -112,11 +112,20 @@ register_lib() {
 BIN=$(readlink -f $0)
 BIN=${BIN%/*}
 REPO=$1
+if [ -n "$2" ]
+then
+	VERSION=$2
+fi
 REPO=${REPO:=https://github.com/madler/zlib.git}
 DIR=$(get_project_src_dir_from $REPO)
 
 cd $DIR
-checkout_latest_git_tag
+if [ "$VERSION" ]
+then
+	git checkout $VERSION
+else
+	checkout_latest_git_tag
+fi
 
 PREFIX=${PREFIX:=$HOME/.opt/${DIR##*/}}
 build_and_install_proj $PREFIX
